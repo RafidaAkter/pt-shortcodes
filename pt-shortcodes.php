@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name:       ProteusThemes shortcodes
+ * Plugin Name:       ProteusThemes Shortcodes
  * Plugin URI:        https://github.com/proteusthemes/pt-shortcodes
  * Description:       ProteusThemes shortcodes used in our themes.
  * Version:           1.0.0
