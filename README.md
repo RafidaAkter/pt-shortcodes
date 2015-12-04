@@ -1,2 +1,2 @@
-# pt-shortcodes
+# ProteusThemes Shortcodes
 Shortcodes plugin used in ProteusThemes themes
