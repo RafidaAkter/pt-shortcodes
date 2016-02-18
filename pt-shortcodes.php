@@ -27,19 +27,30 @@ class PT_Shortcodes {
 	 * @return string HTML
 	 */
 	function fa_shortcode( $atts ) {
-		extract( shortcode_atts( array(
-			'icon'   => 'fa-home',
-			'href'   => '',
-			'color'  => '',
-			'target' => '_self',
-		), $atts ) );
+		$atts = shortcode_atts(
+			apply_filters(
+				'pt-shortcodes/fa_shortcode_attributes',
+				array(
+					'icon'   => 'fa-home',
+					'href'   => '',
+					'color'  => '',
+					'target' => '_self',
+				)
+			),
+			$atts
+		);
 
-		if ( empty( $href ) ) {
-			return '<span class="icon-container"><span class="fa ' . esc_attr( strtolower( $icon ) ) . '" ' . ( ! empty( $color ) ? 'style="color:' . esc_attr( $color ) . ';"' : '' ) . '></span></span>';
-		}
-		else {
-			return '<a class="icon-container" href="' . esc_url( $href ) . '" target="' . esc_attr( $target ) . '"><span class="fa ' . esc_attr( strtolower( $icon ) ) . '" ' . ( ! empty( $color ) ? 'style="color:' . esc_attr( $color ) . ';"' : '' ) . '></span></a>';
-		}
+		return apply_filters(
+			'pt-shortcodes/fa_shortcode_output',
+			sprintf(
+				'%1$s<span class="fa  %2$s"%3$s></span>%4$s',
+				! empty( $atts['href'] ) ? '<a class="icon-container" href="' . ( isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#' ) . '" target="' . esc_attr( $atts['target'] ) . '">' : '<span class="icon-container">',
+				esc_attr( strtolower( $atts['icon'] ) ),
+				isset( $atts['color'] ) ? ' style="color:' . esc_attr( $atts['color'] ) . ';"' : '',
+				isset( $atts['href'] ) ? '</a>' : '</span>'
+			),
+			$atts
+		);
 	}
 
 
@@ -49,16 +60,37 @@ class PT_Shortcodes {
 	 * @return string HTML
 	 */
 	function button_shortcode( $atts, $content = '' ) {
-		extract( shortcode_atts( array(
-			'style'     => 'primary',
-			'href'      => '#',
-			'target'    => '_self',
-			'corners'   => '',
-			'fa'        => null,
-			'fullwidth' => false,
-		), $atts ) );
+		$atts = shortcode_atts(
+			apply_filters(
+				'pt-shortcodes/button_shortcode_attributes',
+				array(
+					'style'     => 'primary',
+					'href'      => '#',
+					'target'    => '_self',
+					'corners'   => '',
+					'fa'        => null,
+					'fullwidth' => false,
+				)
+			),
+			$atts
+		);
 
-		return '<a class="btn  ' . ( 'rounded' == $corners  ? 'btn-rounded' : '' ) . '  btn-' . esc_attr( strtolower( $style ) ) . ( 'true' == $fullwidth  ? '  col-xs-12' : '' ) . '" href="' . esc_url( $href ) . '" target="' . esc_attr( $target ) . '">' . ( isset( $fa )  ? '<i class="fa ' . $fa . '"></i> ' : '') . $content . '</a>';
+		return apply_filters(
+			'pt-shortcodes/button_shortcode_output',
+			sprintf(
+				'<a class="btn  %1$s%2$s%3$s" href="%4$s" target="%5$s">%6$s %7$s</a>',
+				'btn-' . esc_attr( strtolower( $atts['style'] ) ),
+				'rounded' == $atts['corners'] ? '  btn-rounded' : '',
+				'true' == $atts['fullwidth'] ? '  col-xs-12' : '',
+				isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#',
+				esc_attr( $atts['target'] ),
+				isset( $atts['fa'] ) ? '<i class="fa ' . $atts['fa']  . '"></i> ' : '',
+				wp_kses_post( $content )
+			),
+			$atts,
+			$content
+		);
+
 	}
 }
 
