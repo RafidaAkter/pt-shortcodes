@@ -4,7 +4,7 @@
  * Plugin Name:       ProteusThemes Shortcodes
  * Plugin URI:        https://github.com/proteusthemes/pt-shortcodes
  * Description:       ProteusThemes shortcodes used in our themes.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Author:            ProteusThemes
  * Author URI:        https://www.proteusthemes.com/
  * Text Domain:       pt-shortcodes
@@ -47,7 +47,7 @@ class PT_Shortcodes {
 				! empty( $atts['href'] ) ? '<a class="icon-container" href="' . ( isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#' ) . '" target="' . esc_attr( $atts['target'] ) . '">' : '<span class="icon-container">',
 				esc_attr( strtolower( $atts['icon'] ) ),
 				isset( $atts['color'] ) ? ' style="color:' . esc_attr( $atts['color'] ) . ';"' : '',
-				isset( $atts['href'] ) ? '</a>' : '</span>'
+				! empty( $atts['href'] ) ? '</a>' : '</span>'
 			),
 			$atts
 		);
