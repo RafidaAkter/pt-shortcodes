@@ -4,7 +4,7 @@
  * Plugin Name:       ProteusThemes Shortcodes
  * Plugin URI:        https://github.com/proteusthemes/pt-shortcodes
  * Description:       ProteusThemes shortcodes used in our themes.
- * Version:           1.3.0
+ * Version:           1.4.0
  * Author:            ProteusThemes
  * Author URI:        https://www.proteusthemes.com/
  * Text Domain:       pt-shortcodes
