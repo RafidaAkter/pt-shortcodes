@@ -101,7 +101,7 @@ class PT_Shortcodes {
 	public function after_theme_setup() {
 
 		// Add shortcodes in text widget.
-		if ( apply_filters( 'pt/widget_text_do_shortcode', false ) ) {
+		if ( apply_filters( 'pt/widget_text_do_shortcode', false ) || apply_filters( 'pt/convert_widget_text', false ) ) {
 			add_filter( 'widget_text', 'do_shortcode' );
 		}
 	}
