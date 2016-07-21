@@ -72,6 +72,7 @@ class PT_Shortcodes {
 					'corners'   => '',
 					'fa'        => null,
 					'fullwidth' => false,
+					'class'     => '',
 				)
 			),
 			$atts
@@ -80,10 +81,11 @@ class PT_Shortcodes {
 		return apply_filters(
 			'pt-shortcodes/button_shortcode_output',
 			sprintf(
-				'<a class="btn  %1$s%2$s%3$s" href="%4$s" target="%5$s">%6$s %7$s</a>',
+				'<a class="btn  %1$s%2$s%3$s%4$s" href="%5$s" target="%6$s">%7$s %8$s</a>',
 				'btn-' . esc_attr( strtolower( $atts['style'] ) ),
 				'rounded' == $atts['corners'] ? '  btn-rounded' : '',
 				'true' == $atts['fullwidth'] ? '  col-xs-12' : '',
+				! empty( $atts['class'] ) ? '  ' . esc_attr( $atts['class'] ) : '',
 				isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#',
 				esc_attr( $atts['target'] ),
 				isset( $atts['fa'] ) ? '<i class="fa ' . $atts['fa']  . '"></i> ' : '',
