@@ -88,7 +88,7 @@ class PT_Shortcodes {
 				! empty( $atts['class'] ) ? '  ' . esc_attr( $atts['class'] ) : '',
 				isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#',
 				esc_attr( $atts['target'] ),
-				isset( $atts['fa'] ) ? '<i class="fa ' . $atts['fa']  . '"></i> ' : '',
+				isset( $atts['fa'] ) ? '<i class="fa ' . esc_attr( $atts['fa'] )  . '"></i> ' : '',
 				wp_kses_post( $content )
 			),
 			$atts,
