@@ -4,7 +4,7 @@
  * Plugin Name:       ProteusThemes Shortcodes
  * Plugin URI:        https://github.com/proteusthemes/pt-shortcodes
  * Description:       ProteusThemes shortcodes used in our themes.
- * Version:           1.5.0
+ * Version:           1.6.0
  * Author:            ProteusThemes
  * Author URI:        https://www.proteusthemes.com/
  * Text Domain:       pt-shortcodes
@@ -19,6 +19,7 @@ class PT_Shortcodes {
 		// Initialize shortcodes
 		add_shortcode( 'fa', array ( $this , 'fa_shortcode' ) );
 		add_shortcode( 'button', array ( $this , 'button_shortcode' ) );
+		add_shortcode( 'zocial', array( $this, 'sc_zocial' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
 	}
@@ -94,7 +95,6 @@ class PT_Shortcodes {
 			$atts,
 			$content
 		);
-
 	}
 
 	/*
@@ -106,6 +106,27 @@ class PT_Shortcodes {
 		if ( apply_filters( 'pt/widget_text_do_shortcode', false ) || apply_filters( 'pt/convert_widget_text', false ) ) {
 			add_filter( 'widget_text', 'do_shortcode' );
 		}
+	}
+
+
+	/**
+	 * Shortcode for zocial icons.
+	 *
+	 * @param  array $atts
+	 * @return string HTML
+	 */
+	public function sc_zocial( $atts ) {
+		if ( apply_filters( 'pt-shortcodes/enable_zocial_shortcode', false ) ) {
+			extract( shortcode_atts( array(
+				'service' => 'acrobat',
+				'href'    => '#',
+				'target'  => '_self',
+			), $atts ) );
+
+			return '<a class="social-container" href="' . esc_html( $href ) . '" target="' . esc_attr( $target ) . '"><span class="zocial-' . esc_attr( $service ) . '"></span></a>';
+		}
+
+		return false;
 	}
 }
 
