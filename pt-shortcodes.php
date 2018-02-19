@@ -4,7 +4,7 @@
  * Plugin Name:       ProteusThemes Shortcodes
  * Plugin URI:        https://github.com/proteusthemes/pt-shortcodes
  * Description:       ProteusThemes shortcodes used in our themes.
- * Version:           1.6.0
+ * Version:           1.7.0
  * Author:            ProteusThemes
  * Author URI:        https://www.proteusthemes.com/
  * Text Domain:       pt-shortcodes
@@ -15,7 +15,13 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 class PT_Shortcodes {
 
+	private $shortcode_settings;
+
 	function __construct() {
+		$this->shortcode_settings = apply_filters( 'pt-shortcodes/shortcode_settings', array(
+			'fa_version' => 4,
+		) );
+
 		// Initialize shortcodes
 		add_shortcode( 'fa', array ( $this , 'fa_shortcode' ) );
 		add_shortcode( 'button', array ( $this , 'button_shortcode' ) );
@@ -30,6 +36,8 @@ class PT_Shortcodes {
 	 * @return string HTML
 	 */
 	function fa_shortcode( $atts ) {
+		$fa_prefix = ( 4 < $this->shortcode_settings['fa_version'] ) ? '' : 'fa ';
+
 		$atts = shortcode_atts(
 			apply_filters(
 				'pt-shortcodes/fa_shortcode_attributes',
@@ -46,9 +54,9 @@ class PT_Shortcodes {
 		return apply_filters(
 			'pt-shortcodes/fa_shortcode_output',
 			sprintf(
-				'%1$s<span class="fa  %2$s"%3$s></span>%4$s',
+				'%1$s<span class="%2$s"%3$s></span>%4$s',
 				! empty( $atts['href'] ) ? '<a class="icon-container" href="' . ( isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#' ) . '" target="' . esc_attr( $atts['target'] ) . '">' : '<span class="icon-container">',
-				esc_attr( strtolower( $atts['icon'] ) ),
+				$fa_prefix . esc_attr( strtolower( $atts['icon'] ) ),
 				isset( $atts['color'] ) ? ' style="color:' . esc_attr( $atts['color'] ) . ';"' : '',
 				! empty( $atts['href'] ) ? '</a>' : '</span>'
 			),
@@ -63,6 +71,8 @@ class PT_Shortcodes {
 	 * @return string HTML
 	 */
 	function button_shortcode( $atts, $content = '' ) {
+		$fa_prefix = ( 4 < $this->shortcode_settings['fa_version'] ) ? '' : 'fa ';
+
 		$atts = shortcode_atts(
 			apply_filters(
 				'pt-shortcodes/button_shortcode_attributes',
@@ -89,7 +99,7 @@ class PT_Shortcodes {
 				! empty( $atts['class'] ) ? '  ' . esc_attr( $atts['class'] ) : '',
 				isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#',
 				esc_attr( $atts['target'] ),
-				isset( $atts['fa'] ) ? '<i class="fa ' . esc_attr( $atts['fa'] )  . '"></i> ' : '',
+				isset( $atts['fa'] ) ? '<i class="' . $fa_prefix . esc_attr( $atts['fa'] )  . '"></i> ' : '',
 				wp_kses_post( $content )
 			),
 			$atts,
