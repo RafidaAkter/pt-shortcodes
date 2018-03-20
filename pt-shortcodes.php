@@ -27,7 +27,10 @@ class PT_Shortcodes {
 		add_shortcode( 'button', array ( $this , 'button_shortcode' ) );
 		add_shortcode( 'zocial', array( $this, 'sc_zocial' ) );
 
-		add_action( 'after_setup_theme', array( $this, 'after_theme_setup' ) );
+		// Add shortcodes in text widget.
+		if ( apply_filters( 'pt/widget_text_do_shortcode', false ) || apply_filters( 'pt/convert_widget_text', false ) ) {
+			add_filter( 'widget_text', 'do_shortcode' );
+		}
 	}
 
 	/**
@@ -107,17 +110,6 @@ class PT_Shortcodes {
 		);
 	}
 
-	/*
-	 * Run this function, after the theme has setup.
-	 */
-	public function after_theme_setup() {
-
-		// Add shortcodes in text widget.
-		if ( apply_filters( 'pt/widget_text_do_shortcode', false ) || apply_filters( 'pt/convert_widget_text', false ) ) {
-			add_filter( 'widget_text', 'do_shortcode' );
-		}
-	}
-
 
 	/**
 	 * Shortcode for zocial icons.
@@ -140,4 +132,6 @@ class PT_Shortcodes {
 	}
 }
 
-$pt_shortcodes = new PT_Shortcodes();
+add_action( 'after_setup_theme', function() {
+	$pt_shortcodes = new PT_Shortcodes();
+} );
