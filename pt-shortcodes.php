@@ -60,7 +60,7 @@ class PT_Shortcodes {
 				'%1$s<span class="%2$s"%3$s></span>%4$s',
 				! empty( $atts['href'] ) ? '<a class="icon-container" href="' . ( isset( $atts['href'] ) ? esc_url( $atts['href'] ) : '#' ) . '" target="' . esc_attr( $atts['target'] ) . '">' : '<span class="icon-container">',
 				$fa_prefix . esc_attr( strtolower( $atts['icon'] ) ),
-				isset( $atts['color'] ) ? ' style="color:' . esc_attr( $atts['color'] ) . ';"' : '',
+				! empty( $atts['color'] ) ? ' style="color:' . esc_attr( $atts['color'] ) . ';"' : '',
 				! empty( $atts['href'] ) ? '</a>' : '</span>'
 			),
 			$atts
